@@ -1,0 +1,26 @@
+{
+  "name": "maketheteam_swhachey",
+  "version": "1.0.0",
+  "description": "Team Generator App",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swhachey/maketheteam_swhachey.git"
+  },
+  "author": "Scott Hachey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/swhachey/maketheteam_swhachey/issues"
+  },
+  "homepage": "https://github.com/swhachey/maketheteam_swhachey#readme",
+  "dependencies": {
+    "inquirer": "^7.3.3",
+    "jest": "^26.6.3"
+  }
+}
