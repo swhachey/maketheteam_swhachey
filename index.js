@@ -43,11 +43,68 @@ const promptAdd = ()=> {
     ])
     .then((data)=> {
       if (data.add === "Engineer") {
-          console.log("engineer")
+          console.log("engineer");
+        promptEngineer();
       } if (data.add === "Intern") {
-          console.log("intern")
+          console.log("intern");
+          promptIntern();
       } else {return}
   });
 }
+
+const promptEngineer = ()=> {
+return inquirer.prompt([
+    {
+      type: 'input',
+      name: 'engname',
+      message: 'What is your Engineers name?',
+    },
+    {
+      type: 'input',
+      name: 'engid',
+      message: 'What is the engineers ID#',
+    },
+    {
+      type: 'input',
+      name: 'engemail',
+      message: 'What is the engineers email address?',
+    },
+    {
+      type: 'input',
+      name: 'enggit',
+      message: 'What is the engineers GitHub username?',
+    },
+  ])
+  .then(()=> {
+      promptAdd();
+  })
+}
+const promptIntern = () => {
+    return inquirer.prompt([
+    {
+      type: 'input',
+      name: 'internname',
+      message: 'What is your interns name?',
+    },
+    {
+      type: 'input',
+      name: 'internid',
+      message: 'What is the interns ID#',
+    },
+    {
+      type: 'input',
+      name: 'internmail',
+      message: 'What is the interns email address?',
+    },
+    {
+      type: 'input',
+      name: 'internschool',
+      message: 'What is your interns school?',
+    },
+  ])
+  .then(()=> {
+      promptAdd();
+  });
+};
 
 promptMain();
