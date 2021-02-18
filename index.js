@@ -23,16 +23,31 @@ const promptMain = () => {
       name: 'mgmtnum',
       message: 'What is the managers office phone #?',
     },
-    {
-      type: 'list',
-      name: 'github',
-      message: 'Add employee or finish team?',
-      choices: ["Engineer","Intern","Finish Team"]
-    },
   ])
-  .then((data) => {
-      console.log(`made it`)
+  .then((data)=> {
+console.log(data.mgmtname)
+  })
+  .then(() => {
+      promptAdd();
   })
 };
+
+const promptAdd = ()=> {
+    return inquirer.prompt([
+{
+    type: 'list',
+      name: 'add',
+      message: 'Add employee or finish team?',
+      choices: ["Engineer","Intern","Finish Team"]
+}
+    ])
+    .then((data)=> {
+      if (data.add === "Engineer") {
+          console.log("engineer")
+      } if (data.add === "Intern") {
+          console.log("intern")
+      } else {return}
+  });
+}
 
 promptMain();
