@@ -1,5 +1,11 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
+const teamArray = [];
+const Employee = require("./lib/employee");
+const Manager = require("./lib/manager");
+const Engineer = require("./lib/engineer");
+const Intern = require("./lib/intern");
+
 
 const promptMain = () => {
   return inquirer.prompt([
@@ -25,7 +31,13 @@ const promptMain = () => {
     },
   ])
   .then((data)=> {
-console.log(data.mgmtname)
+    let manager = new Manager(
+      data.mgmtname,
+      data.mgmtid,
+      data.mgmtemail,
+      data.mgmtnum,
+    );
+    teamArray.push(manager);
   })
   .then(() => {
       promptAdd();
@@ -33,6 +45,7 @@ console.log(data.mgmtname)
 };
 
 const promptAdd = ()=> {
+  console.log(teamArray)
     return inquirer.prompt([
 {
     type: 'list',
@@ -75,6 +88,15 @@ return inquirer.prompt([
       message: 'What is the engineers GitHub username?',
     },
   ])
+  .then((data)=> {
+    let engineer = new Engineer(
+      data.engname, 
+      data.engid, 
+      data.engemail, 
+      data.enggit
+    );
+    teamArray.push(engineer);
+  })
   .then(()=> {
       promptAdd();
   })
@@ -102,6 +124,15 @@ const promptIntern = () => {
       message: 'What is your interns school?',
     },
   ])
+  .then((data)=> {
+    const intern = new Intern(
+      data.internname,
+      data.internid, 
+      data.internmail,
+      data.internschool
+    );
+    teamArray.push(intern);
+  })
   .then(()=> {
       promptAdd();
   });
