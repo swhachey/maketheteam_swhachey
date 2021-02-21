@@ -1,6 +1,5 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const util = require("util")
 const teamArray = [];
 const Employee = require("./lib/employee");
 const Manager = require("./lib/manager");
