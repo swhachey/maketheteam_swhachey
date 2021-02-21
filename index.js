@@ -7,8 +7,6 @@ const Manager = require("./lib/manager");
 const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
 
-const writeFileAsync = util.promisify(fs.writeFile);
-
 const promptMain = () => {
   return inquirer.prompt([
     {
@@ -138,29 +136,6 @@ const promptIntern = () => {
   });
 };
 
-// const generateHTML = (answers) =>
-//   `<!DOCTYPE html>
-// <html lang="en">
-// <head>
-//   <meta charset="UTF-8">
-//   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-//   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-//   <title>Document</title>
-// </head>
-// <body>
-//   <div class="jumbotron jumbotron-fluid">
-//   <div class="container">
-//     <h1 class="display-4">Hi! My name is ${answers.name}</h1>
-//     <p class="lead">I am from ${answers.location}.</p>
-//     <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-//     <ul class="list-group">
-//       <li class="list-group-item">My GitHub username is ${answers.github}</li>
-//       <li class="list-group-item">LinkedIn: ${answers.linkedin}</li>
-//     </ul>
-//   </div>
-// </div>
-// </body>
-// </html>`;
 let html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -170,28 +145,30 @@ let html = `<!DOCTYPE html>
     <title>Team Generator</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./dist/style.css">
 </head>
 <body>
     <div class="container-fluid">
-    <nav class="navbar navbar-light bg-primary">
+    <nav class="navbar sticky-top navbar-light bg-primary">
         <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1">Team Generator</span>
+            <span class="navbar-brand mb-0 h1" style="color:white">Team Generator</span>
         </div>
     </nav>
-<br>`
+<br>
+<div class="row row-cols-1 row-cols-md-2 g-4">`;
 
 const cardCreator = () => {
   for (var i=0; i < teamArray.length; i++){
-    if (teamArray[i].getRole() === "Manager") {html = html.concat(managerCard())} else if (teamArray[i].getRole() === "Engineer") {html = html.concat(engineerCard(i))} else if (teamArray[i].getRole() === "Intern") {html = html.concat(internCard())}  else {console.error("Nope")}
+    if (teamArray[i].getRole() === "Manager") {html = html.concat(managerCard())} else if (teamArray[i].getRole() === "Engineer") {html = html.concat(engineerCard(i))} else if (teamArray[i].getRole() === "Intern") {html = html.concat(internCard(i))}  else {console.error("Nope")}
   }
   return(htmlStart())
-}
+};
 
 
 
 const managerCard = () => {
-  return `<div class="card text-dark bg-info mb-3">
+  return `<div class="col">
+  <div class="card text-dark bg-danger mb-3" style="max-width: 18rem;">
     <h5 class="card-header">${teamArray[0].name}</h5>
     <div class="card-body">
         <h5 class="card-title">Manager</h5>
@@ -201,42 +178,41 @@ const managerCard = () => {
             <li class="list-group-item">Office Number: ${teamArray[0].officeNum}</li>
         </ul>
     </div>
-</div> <br>`
+</div> </div> <br>`
 };
-const engineerCard = (i) => {return `<div class="card text-dark bg-info mb-3">
+const engineerCard = (i) => {return `<div class="col"><div class="card text-dark bg-success mb-3" style="max-width: 18rem;">
     <h5 class="card-header">${teamArray[i].name}</h5>
     <div class="card-body">
         <h5 class="card-title">Engineer</h5>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">ID#: ${teamArray[i].id}</li>
             <li class="list-group-item"><a href="mailto: ${teamArray[i].email}">Email: ${teamArray[i].email}</a></li>
-            <li class="list-group-item"><a href="#">GitHub: ${teamArray[i].github}</a></li>
+            <li class="list-group-item"><a href="http://github.com/${teamArray[i].github}">GitHub: ${teamArray[i].github}</a></li>
         </ul>
     </div>
-</div><br>`};
-const internCard = () => {return `<div class="card text-dark bg-info mb-3">
-    <h5 class="card-header">Name 1</h5>
+</div></div>`};
+const internCard = (i) => {return `<div class="col"><div class="card text-dark bg-warning mb-3" style="max-width: 18rem;">
+    <h5 class="card-header">${teamArray[i].name}</h5>
     <div class="card-body">
-        <h5 class="card-title">Manager</h5>
-        <p class="card-text">More info here...</p>
+        <h5 class="card-title">Intern</h5>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">ID</li>
-            <li class="list-group-item"><a href="mailto: email@email.com">Email Address</a></li>
-            <li class="list-group-item"><a href="#">GitHub Name</a></li>
+            <li class="list-group-item">ID#: ${teamArray[i].id}</li>
+            <li class="list-group-item"><a href="mailto: ${teamArray[i].email}">Email: ${teamArray[i].email}</a></li>
+          <li class="list-group-item">School: ${teamArray[i].school}</li>
         </ul>
     </div>
-</div><br>`};
+</div></div>`};
 
 
 const htmlStart = () => {
-fs.appendFile('index.html', `${html} </div>
+fs.appendFile('index.html', `${html} </div></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
     crossorigin="anonymous"></script>
 </body></html>`, (err) =>
   err ? console.error(err) : console.log('Commit logged!')
 );
-}
+};
 
 promptMain();
 
