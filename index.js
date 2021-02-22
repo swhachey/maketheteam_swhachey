@@ -44,7 +44,6 @@ const promptMain = () => {
 };
 
 const promptAdd = ()=> {
-  console.log(teamArray)
     return inquirer.prompt([
 {
     type: 'list',
